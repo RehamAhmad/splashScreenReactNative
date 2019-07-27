@@ -23,17 +23,35 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import { SplashScreen } from './src/SplashScreen';
+import { Splash } from './src/SplashScreen';
 import { MainScreen } from './src/MainScreen';
+import SplashScreen from 'react-native-splash-screen'
 /////////////// STEPS
 // install react-native-splash-screen 
 // react-native link react-native-splash-screen automatically
 
-const App = () => {
-  return (
-  // <SplashScreen />
-     <MainScreen/>
-  );
-};
 
+
+class App extends React.Component {
+    
+    state = {count:0} // for testing Splash
+    componentDidMount() {
+    	// do stuff while splash screen is shown
+        // After having done stuff (such as async tasks) hide the splash screen
+        SplashScreen.hide();
+    }
+    render(){
+      return (     
+      <View style={{ flex: 1 }}>
+         <StatusBar
+          barStyle='light-content'
+          backgroundColor={'#3d3d3d'}
+        />
+         {this.state.count < 5 ?
+          <Splash count={this.state.count} onPress={()=>this.setState({count:this.state.count+1})}/>
+          : <MainScreen />}
+      </View>)
+      
+    }
+  }
 export default App;
